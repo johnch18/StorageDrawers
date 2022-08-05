@@ -15,34 +15,13 @@ import net.minecraft.util.StatCollector;
 
 import java.util.List;
 
-public class ItemUpgrade extends Item
+public class ItemUpgrade extends ItemUpgradeBase
 {
-    public static final String[] iconNames = new String[] { null, null, "iron", "gold", "obsidian", "diamond", "emerald" };
 
-    @SideOnly(Side.CLIENT)
-    private IIcon[] icons;
-
-    public ItemUpgrade (String name) {
-        setUnlocalizedName(name);
-        setHasSubtypes(true);
-        setMaxDamage(0);
-        setCreativeTab(ModCreativeTabs.tabStorageDrawers);
+    public ItemUpgrade(String name) {
+        super(name);
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage (int meta) {
-        return icons[MathHelper.clamp_int(meta, 0, iconNames.length - 1)];
-    }
-
-    @Override
-    public String getUnlocalizedName (ItemStack itemStack) {
-        int meta = MathHelper.clamp_int(itemStack.getItemDamage(), 0, iconNames.length - 1);
-        if (iconNames[meta] == null)
-            return super.getUnlocalizedName();
-
-        return super.getUnlocalizedName() + "." + iconNames[meta];
-    }
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -61,13 +40,8 @@ public class ItemUpgrade extends Item
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons (IIconRegister register) {
-        icons = new IIcon[iconNames.length];
-
-        for (int i = 0, n = iconNames.length; i < n; i++) {
-            if (iconNames[i] != null)
-                icons[i] = register.registerIcon(StorageDrawers.MOD_ID + ":upgrade_" + iconNames[i]);
-        }
+    public IIcon getIcon(int i, IIconRegister register) {
+        return register.registerIcon(StorageDrawers.MOD_ID + ":upgrade_" + iconNames[i]);
     }
+
 }
