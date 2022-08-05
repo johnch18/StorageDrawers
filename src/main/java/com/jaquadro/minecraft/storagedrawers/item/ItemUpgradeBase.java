@@ -1,5 +1,4 @@
 package com.jaquadro.minecraft.storagedrawers.item;
-
 import com.jaquadro.minecraft.storagedrawers.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -50,12 +49,10 @@ public abstract class ItemUpgradeBase extends Item implements IItemUpgrade {
     @SideOnly(Side.CLIENT)
     public void registerIcons (IIconRegister register) {
         setIcons(new IIcon[iconNames.length]);
-
         for (int i = 0, n = iconNames.length; i < n; i++) {
-            if (iconNames[i] != null) {
-                System.out.println(i);
-                getIcons()[i] = getIcon(i, register);
-            }
+            if (iconNames[i] == null)
+                continue;
+            getIcons()[i] = getIcon(i, register);
         }
     }
 
